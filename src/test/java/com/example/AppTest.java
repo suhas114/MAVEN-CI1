@@ -1,38 +1,38 @@
 package com.example;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Unit test for simple App.
+ * Unit test for the application greeting.
  */
-public class AppTest 
-    extends TestCase
+public class AppTest extends TestCase
 {
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AppTest( String testName )
+    public AppTest(String testName)
     {
-        super( testName );
+        super(testName);
     }
 
-    /**
-     * @return the suite of tests being tested
-     */
     public static Test suite()
     {
-        return new TestSuite( AppTest.class );
+        return new TestSuite(AppTest.class);
     }
 
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
+    public void testAppPrintsGreeting()
     {
-        assertTrue( true );
+        ByteArrayOutputStream capturedOutput = new ByteArrayOutputStream();
+        PrintStream originalOutput = System.out;
+
+        try {
+            System.setOut(new PrintStream(capturedOutput));
+            App.main(new String[0]);
+        } finally {
+            System.setOut(originalOutput);
+        }
+
+        assertEquals("Hello World!", capturedOutput.toString().trim());
     }
 }
